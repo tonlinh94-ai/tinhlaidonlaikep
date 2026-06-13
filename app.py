@@ -1,20 +1,45 @@
 import streamlit as st
 
-st.title("Tính lãi đơn và lãi kép")
+# Tiêu đề app
+st.title("📈 TÍNH TIỀN GỬI TIẾT KIỆM")
 
 # Nhập dữ liệu
-C = st.number_input("Số tiền gốc (VND)", value=500000000.0)
-i = st.number_input("Lãi suất năm", value=0.06, format="%.4f")
-n = st.number_input("Số tháng", value=4, step=1)
+C = st.number_input(
+    "Nhập số tiền gửi (triệu đồng)",
+    min_value=0.0,
+    value=100.0
+)
 
-# Tính toán
-A = C * (1 + i * n / 12)      # Lãi đơn
-B = C * (1 + i / 12) ** n     # Lãi kép
+i = st.number_input(
+    "Nhập lãi suất tiết kiệm theo năm (%)",
+    min_value=0.0,
+    value=6.0
+)
 
-# Hiển thị kết quả
-st.subheader("Kết quả")
-st.write(f"Tổng tiền nhận được theo lãi đơn: {A:,.0f} VND")
-st.write(f"Tổng tiền nhận được theo lãi kép: {B:,.0f} VND")
+n = st.number_input(
+    "Nhập số tháng gửi",
+    min_value=1,
+    value=12
+)
 
-# Chênh lệch
-st.write(f"Chênh lệch: {B - A:,.0f} VND")
+# Đổi % sang số thập phân
+i = i / 100
+
+# Nút tính toán
+if st.button("Tính toán"):
+    
+    # Lãi đơn
+    A = C * (1 + i * n / 12)
+
+    # Lãi kép
+    B = C * (1 + i / 12) ** n
+
+    st.subheader("Kết quả")
+
+    st.success(
+        f"Tổng tiền nhận được theo lãi đơn: {A:,.4f} triệu đồng"
+    )
+
+    st.success(
+        f"Tổng tiền nhận được theo lãi kép: {B:,.4f} triệu đồng"
+    )
